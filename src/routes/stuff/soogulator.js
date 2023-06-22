@@ -86,6 +86,7 @@ const Soogulator = () => {
     setSugarPer100g(e.target.value)
   }
 
+  //TODO: fix empty inputs
   const handleAddClick = () => {
     // calculate sugar based on given quantity
     const sugar = (productQuantity * sugarPer100g) / 100

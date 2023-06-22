@@ -10,6 +10,7 @@ import {
 import App from './App';
 import Site_404 from "./routes/site_404";
 import Site_soogulator from './routes/site_soogulator';
+import Site_about_me from './routes/site_about_me'
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: '/soogulator',
     element: <Site_soogulator/>
+  },
+  {
+    path: '/about',
+    element: <Site_about_me/>
   },
   {
     path: "*",

@@ -5,6 +5,7 @@ import Footer from './footer'
 export default function Site_soogulator() {
   return (
     <>
+    {/* make own header - home, get my CV */}
       <Header/>
       <About_me/>
       <Footer/>
