@@ -1,13 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+
+import App from './App';
+import Site_404 from "./routes/site_404";
+import Site_soogulator from './routes/site_soogulator';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App></App>
+  },
+  {
+    path: '/soogulator',
+    element: <Site_soogulator/>
+  },
+  {
+    path: "*",
+    element: <Site_404/>
+  },
+]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
