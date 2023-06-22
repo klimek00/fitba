@@ -5,7 +5,7 @@ export default function Body() {
     <>
       <div className="h-screen p-6">
         in build. always will be.<br/>
-        you can always <Link to="soogulator">Soogulate</Link> your food
+        you can always <Link to="soogulator"><span className="text-blue-600 visited:text-purple-600">Soogulate</span></Link> your food
 
       </div>
     </>

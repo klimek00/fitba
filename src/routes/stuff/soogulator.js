@@ -4,6 +4,37 @@ import Select from './select'
 import Input from './input'
 import Table from './table'
 import data from './productList.json'
+import { DrawChart, prepareChartData, splitData } from './prepareChart'
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
+// import { Pie } from 'react-chartjs-2'
+ChartJS.register(ArcElement, Tooltip, Legend)
+
+// const chartOld = {
+//   labels: ["Miód"],
+//   datasets: [
+//     {
+//       label: "# of Votes",
+//       data: [80],
+//       backgroundColor: [
+//         "rgba(255, 99, 132, 0.2)",
+//         "rgba(54, 162, 235, 0.2)",
+//         "rgba(255, 206, 86, 0.2)",
+//         "rgba(75, 192, 192, 0.2)",
+//         "rgba(153, 102, 255, 0.2)",
+//         "rgba(255, 159, 64, 0.2)"
+//       ],
+//       borderColor: [
+//         "rgba(255, 99, 132, 1)",
+//         "rgba(54, 162, 235, 1)",
+//         "rgba(255, 206, 86, 1)",
+//         "rgba(75, 192, 192, 1)",
+//         "rgba(153, 102, 255, 1)",
+//         "rgba(255, 159, 64, 1)"
+//       ],
+//       borderWidth: 1
+//     }
+//   ]
+// }
 
 const Soogulator = () => {
   const [products, setProducts] = useState([])
@@ -12,18 +43,25 @@ const Soogulator = () => {
   const [productQuantity, setProductQuantity] = useState('')
   const [sugarPer100g, setSugarPer100g] = useState('')
   const [tableData, setTableData] = useState([])
-
-  // useEffect(() => {
-  //   fetch("./routes/stuff/productList.json")
-  //     .then((response) => response.json())
-  //     .then((data) => setProducts(data))
-  //     .catch((error) => console.log(error))
-  // }, [])
+  const [chartData, setChartData] = useState()
 
   useEffect(() => {
     if (data)
       setProducts(data)
   }, [])
+
+  useEffect(() => {
+    //prevent first render
+    if (tableData.length) {
+      //split tableData so it contains only names and sugar amount
+      let prepare = splitData(tableData)
+      
+      //create data used in Chart.JS
+      prepare = prepareChartData(prepare[0], prepare[1])
+  
+      setChartData(prepare)
+    }
+  }, [tableData])
 
     //update input on product chosen 
   const handleProductChange = (e) => {
@@ -68,20 +106,33 @@ const Soogulator = () => {
   }
 
   return (
-    <div>
-      <div className="form">
-        <Select
-          options={products.map((product) => product.name)}
-          value={selectedProduct}
-          onChange={handleProductChange}
-        />
-        <Input label="Nazwa składnika" value={productName} onChange={handleProductNameChange} />
-        <Input label="Ilość produktu" value={productQuantity} onChange={handleProductQuantityChange} />
-        <Input label="Ilość produktu na 100g" value={sugarPer100g} onChange={handleProductSugarChange} />
-        <button onClick={handleAddClick}>DODAJ</button>
+    <>
+      <div>
+        <div className="flex justify-center">
+          <div className="w-1/4 p-6">
+            <div className="form">
+              <Select
+                options={products.map((product) => product.name)}
+                value={selectedProduct}
+                onChange={handleProductChange}
+              />
+              <Input label="Nazwa składnika" value={productName} onChange={handleProductNameChange} />
+              <Input label="Ilość produktu" value={productQuantity} onChange={handleProductQuantityChange} />
+              <Input label="Ilość produktu na 100g" value={sugarPer100g} onChange={handleProductSugarChange} />
+              <button className="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600" onClick={handleAddClick}>DODAJ</button>
+            </div>
+          </div>
+          <div className="w-1/4 p-6">
+            <Table data={tableData} />
+          </div>
+        </div>
+        <div className="h-1/4 p-8 w-full flex justify-center">
+          <div className="w-1/4">
+            {chartData && <DrawChart chartData={chartData}/>}
+          </div>
+        </div>
       </div>
-      <Table data={tableData} />
-    </div>
+    </>
   )
 }
 
