@@ -6,9 +6,11 @@ export default function Site_404() {
   return (
   <>
     <Header/>
-      <h1></h1>
-      :| <br/>
-      havent found this' one
+      <div className="block">
+        <h1></h1>
+          :| <br/>
+          havent found this' one
+      </div>
     <Footer/>
   </>
   )

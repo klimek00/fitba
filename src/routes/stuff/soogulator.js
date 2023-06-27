@@ -118,8 +118,8 @@ const Soogulator = () => {
                 onChange={handleProductChange}
               />
               <Input label="Nazwa składnika" value={productName} onChange={handleProductNameChange} />
-              <Input label="Ilość produktu" value={productQuantity} onChange={handleProductQuantityChange} />
-              <Input label="Ilość produktu na 100g" value={sugarPer100g} onChange={handleProductSugarChange} />
+              <Input label="Ilość produktu [g]" value={productQuantity} onChange={handleProductQuantityChange} />
+              <Input label="Ilość cukru na 100g [g]" value={sugarPer100g} onChange={handleProductSugarChange} />
               <button className="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600" onClick={handleAddClick}>DODAJ</button>
             </div>
           </div>
